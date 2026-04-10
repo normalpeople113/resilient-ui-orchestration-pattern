@@ -1,0 +1,13 @@
+flowchart TD
+    A[External Trigger Source] -->|Poll & Validate| B[Orchestration Engine]
+    B -->|Group by Context| C[Resilient UI Execution Layer]
+    C -->|DOM Fallback Chain| D{State Valid?}
+    D -->|No| E[Conditional Self-Healing]
+    D -->|Yes| F[Atomic State Sync]
+    E --> F
+    F -->|Writeback| A
+    F -->|Heartbeat + Alert| G[Observability Bridge]
+    
+    style C fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style F fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style G fill:#fff3e0,stroke:#e65100,stroke-width:2px
