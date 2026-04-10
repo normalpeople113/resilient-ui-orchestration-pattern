@@ -9,7 +9,7 @@
 ---
 
 ## 🎯 Problem Statement
-Banyak organisasi masih mengandalkan alur kerja yang terfragmentasi antara **sumber data eksternal** (Spreadsheet, DB export, ERP dump) dan **sistem target legacy** (Web portal tanpa API, SaaS vendor, dashboard internal).  
+Banyak perusahaan/organisasi masih mengandalkan alur kerja yang terfragmentasi antara **sumber data eksternal** (Spreadsheet, DB export, ERP dump) dan **sistem target legacy** (Web portal tanpa API, SaaS vendor, dashboard internal).  
 Proses manual menyebabkan: human error tinggi, tidak ada audit trail real-time, dan bottleneck saat volume transaksi naik.
 
 ## 💡 Core Concept
@@ -25,15 +25,19 @@ Alih-alih menunggu migrasi sistem atau reverse-engineering API internal, pola in
 ## 🏗️ Architecture
 ```mermaid
 flowchart TD
-    A[External Trigger Source] -->|Poll & Validate| B[Orchestration Engine]
-    B -->|Group by Context| C[Resilient UI Execution Layer]
-    C -->|DOM Fallback Chain| D{State Valid?}
-    D -->|No| E[Conditional Self-Healing]
-    D -->|Yes| F[Atomic State Sync]
+    A["📥 External Trigger Source"] -->|"🔄 Poll & Validate"| B["⚙️ Orchestration Engine"]
+    B -->|"📊 Group by Context"| C["🤖 Resilient UI Execution Layer"]
+    C -->|"🔀 DOM Fallback Chain"| D{"✅ State Valid?"}
+    D -->|"❌ No"| E["🔧 Conditional Self-Healing"]
+    D -->|"✔️ Yes"| F["💾 Atomic State Sync"]
     E --> F
-    F -->|Writeback| A
-    F -->|Heartbeat + Alert| G[Observability Bridge]
+    F -->|"📝 Writeback"| A
+    F -->|"💓 Heartbeat"| G["📡 Observability Bridge"]
     
-    style C fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
-    style F fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    style G fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style A fill:#000000,stroke:#00ffff,stroke-width:3px,color:#00ffff
+    style B fill:#000000,stroke:#ff00ff,stroke-width:3px,color:#ff00ff
+    style C fill:#000000,stroke:#0080ff,stroke-width:3px,color:#0080ff
+    style D fill:#000000,stroke:#00ff00,stroke-width:3px,color:#00ff00
+    style E fill:#000000,stroke:#ff8000,stroke-width:3px,color:#ff8000
+    style F fill:#000000,stroke:#00ff00,stroke-width:3px,color:#00ff00
+    style G fill:#000000,stroke:#ffff00,stroke-width:3px,color:#ffff00
